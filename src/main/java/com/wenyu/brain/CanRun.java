@@ -1,4 +1,4 @@
-package fundamental;
+package com.wenyu.brain;
 
 /**
  * @author Wenyu

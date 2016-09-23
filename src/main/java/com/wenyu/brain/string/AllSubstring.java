@@ -1,6 +1,6 @@
-package fundamental.string;
+package com.wenyu.brain.string;
 
-import fundamental.CanRun;
+import com.wenyu.brain.CanRun;
 
 import java.util.ArrayList;
 import java.util.List;
