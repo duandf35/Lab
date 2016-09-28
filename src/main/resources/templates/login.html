@@ -16,9 +16,9 @@
         <!-- Thymeleaf has added CSRF token to the form -->
         <!-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> -->
 
-        <form th:action="@{/login}" th:object="${loginForm}" method="post">
-            <div><label> User Name : <input type="text" th:field="*{username}"/> </label></div>
-            <div><label> Password: <input type="password" th:field="*{password}"/> </label></div>
+        <form th:action="@{/login}" method="post">
+            <div><label> User Name : <input type="text" name="username"/> </label></div>
+            <div><label> Password: <input type="password" name="password"/> </label></div>
             <div><input type="submit" value="Sign In"/></div>
         </form>
     </body>
