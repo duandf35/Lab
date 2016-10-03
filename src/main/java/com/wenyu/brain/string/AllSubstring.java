@@ -15,10 +15,11 @@ public class AllSubstring implements CanRun {
     @Override
     public void run() {
         removeOneSubsets();
+        toggleAllChars();
     }
 
     /**
-     * Generate a tree from a given string.
+     * Case 1: Generate a tree from a given string.
      *
      * Given: a string "Test"
      *
@@ -51,27 +52,65 @@ public class AllSubstring implements CanRun {
                                     .map(e -> String.join(",", e))
                                     .collect(Collectors.toList());
 
-        System.out.println("Output:\n" + String.join("\n", output));
+        System.out.println("Output:\n" + String.join("\n", output) + "\n");
     }
 
     /**
-     * Toggle lower/upper case for all characters, one character each time.
+     * Case 2: Toggle lower/upper case for all characters, one character each time.
+     *
+     * Toggle -> two child nodes
+     *        -> tree
+     *        -> layer
+     *        -> recursion
      *
      * Given: a string "Test"
      *
      * Then: return list
      *
-     * [Test, TEst, TESt, TEST]
-     * [TeSt, TeST]
-     * [TesT]
-     *
-     * [test, tEst, tESt, tEST]
-     * [teSt, teST]
-     * [tesT]
-     *
-     * Total:
+     *                                    Test
+     * 1                  Test                                    test
+     * 2          Test               TEst                test               tEst
+     * 3    Test      TeSt      TEst     TESt       test      teSt      tEst     tESt
+     * 4 Test TesT TeSt TeST TEst TEsT TESt TEST test tesT teSt teST tEst tEsT tESt tEST
      */
-    private static void removeOneSubsets2() {
+    private static void toggleAllChars() {
+        String input = "Test";
+        List<String> output = new ArrayList<>();
+
+        toggleAllChars(new StringBuilder(input), 0, output);
+
+        System.out.println("Input: " + input + "\nOutput: " + output.toString() + "\n");
+    }
+
+    private static void toggleAllChars(StringBuilder string, int index, List<String> result) {
+        if (index >= string.length()) {
+            result.add(string.toString());
+            return;
+        }
+
+        StringBuilder next = new StringBuilder(string);
+
+        // not toggle
+        toggleAllChars(string, index + 1, result);
+        // toggle
+        next.setCharAt(index, toggle(next.charAt(index)));
+        toggleAllChars(next, index + 1, result);
+    }
+
+    private static Character toggle(Character c) {
+        if (c <= 'z' && c >= 'a') {
+            return Character.toUpperCase(c);
+        } else if (c <= 'Z' && c >= 'A'){
+            return Character.toLowerCase(c);
+        } else {
+            return c;
+        }
+    }
+
+    /**
+     * Case 3: All permutations.
+     */
+    private static void allPermutation() {
 
     }
 }

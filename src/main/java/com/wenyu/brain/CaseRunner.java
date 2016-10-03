@@ -25,6 +25,8 @@ public class CaseRunner extends SpringBootServletInitializer {
     }
 
     public static void main (String... args) {
-        SpringApplication.run(CaseRunner.class, args);
+        runAllCases();
+
+//        SpringApplication.run(CaseRunner.class, args);
     }
 }
