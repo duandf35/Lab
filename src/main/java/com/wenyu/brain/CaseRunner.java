@@ -1,5 +1,6 @@
 package com.wenyu.brain;
 
+import com.wenyu.brain.math.Pow;
 import com.wenyu.brain.string.AllSubstring;
 
 import org.springframework.boot.SpringApplication;
@@ -20,7 +21,9 @@ public class CaseRunner extends SpringBootServletInitializer {
     private static final Set<CanRun> Q = new HashSet<>();
 
     private static void runAllCases() {
-        Q.add(new AllSubstring());
+        Q.add(new WhiteBoard());
+        Q.add(new Pow());
+//        Q.add(new AllSubstring());
         Q.forEach(CanRun::run);
     }
 
