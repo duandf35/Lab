@@ -16,6 +16,7 @@ public class AllSubstring implements CanRun {
     public void run() {
         removeOneSubsets();
         toggleAllChars();
+        allPermutation();
     }
 
     /**
@@ -109,8 +110,50 @@ public class AllSubstring implements CanRun {
 
     /**
      * Case 3: All permutations.
+     *
+     *                      ABB(1) <-- swapping start index
+     *       ABB(2)         BAB(2)        BBA(X) <-- will be generated in the next recursion!
+     *   ABB(3) ABB(X)   BAB(3) BBA(3)
      */
     private static void allPermutation() {
+        String string = "ABB";
 
+        List<String> result = new ArrayList<>();
+
+        allPermutation(new StringBuilder(string), 0, result);
+
+        System.out.println("Permutation of String '" + string + "' is: " + result.toString() + "\n total: " + result.size());
+    }
+
+    private static void allPermutation(StringBuilder string, int index, List<String> result) {
+        if (index >= string.length()) {
+            result.add(string.toString());
+            return;
+        }
+
+        // 1. each recursion represent each level
+        // 2. swap the current char with a certain one (no matter they're same or not)
+        // one char only need to be swapped ONCE per recursion, otherwise duplication
+        // will be introduced
+        byte[] toSwapChar = new byte[256];
+
+        for (int i = index; i < string.length(); i++) {
+            if (toSwapChar[string.charAt(i)] != 1) {
+
+                swap(string, index, i); // for example, ABB -> BAB (1, 2 switch)
+                allPermutation(new StringBuilder(string), index + 1, result);
+                swap(string, index, i); // need swap back for ABB -> BBA (1, 3 switch)
+
+                toSwapChar[string.charAt(i)] = 1;
+            }
+        }
+    }
+
+    private static void swap(StringBuilder string, int from, int to) {
+        if (from != to) {
+            Character c = string.charAt(from);
+            string.setCharAt(from, string.charAt(to));
+            string.setCharAt(to, c);
+        }
     }
 }
