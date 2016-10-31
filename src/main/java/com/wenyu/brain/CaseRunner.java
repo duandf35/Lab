@@ -1,6 +1,8 @@
 package com.wenyu.brain;
 
+import com.wenyu.brain.dp.Dungeon;
 import com.wenyu.brain.math.Pow;
+import com.wenyu.brain.math.Sqrt;
 import com.wenyu.brain.string.AllSubstring;
 
 import org.springframework.boot.SpringApplication;
@@ -22,8 +24,10 @@ public class CaseRunner extends SpringBootServletInitializer {
 
     private static void runAllCases() {
         Q.add(new WhiteBoard());
-        Q.add(new Pow());
+//        Q.add(new Pow());
 //        Q.add(new AllSubstring());
+//        Q.add(new Sqrt());
+        Q.add(new Dungeon());
         Q.forEach(CanRun::run);
     }
 
