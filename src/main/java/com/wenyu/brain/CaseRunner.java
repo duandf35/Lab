@@ -1,8 +1,10 @@
 package com.wenyu.brain;
 
 import com.wenyu.brain.dp.Dungeon;
+import com.wenyu.brain.dp.Dungeon2;
 import com.wenyu.brain.math.Pow;
 import com.wenyu.brain.math.Sqrt;
+import com.wenyu.brain.other.BinarySearchRelated;
 import com.wenyu.brain.string.AllSubstring;
 
 import org.springframework.boot.SpringApplication;
@@ -27,7 +29,9 @@ public class CaseRunner extends SpringBootServletInitializer {
 //        Q.add(new Pow());
 //        Q.add(new AllSubstring());
 //        Q.add(new Sqrt());
-        Q.add(new Dungeon());
+//        Q.add(new Dungeon());
+        Q.add(new Dungeon2());
+//        Q.add(new BinarySearchRelated());
         Q.forEach(CanRun::run);
     }
 
