@@ -8,7 +8,8 @@ if __name__ == "__main__":
     lr = ListRelated()
     classes = [
         # s,
-        lr]
+        # lr
+    ]
 
     for clazz in classes:
         clazz.run()
