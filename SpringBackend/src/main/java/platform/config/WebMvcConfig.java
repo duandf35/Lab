@@ -1,4 +1,4 @@
-package com.wenyu.brain.design.platform.config;
+package platform.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;

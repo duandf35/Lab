@@ -1,4 +1,4 @@
-package com.wenyu.brain.design.platform.controller;
+package platform.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

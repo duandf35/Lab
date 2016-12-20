@@ -1,7 +1,7 @@
-package com.wenyu.brain.design.platform.service;
+package platform.service;
 
-import com.wenyu.brain.design.platform.dao.UserDAO;
-import com.wenyu.brain.design.platform.model.User;
+import platform.dao.UserDAO;
+import platform.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

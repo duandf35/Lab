@@ -1,4 +1,4 @@
-package com.wenyu.brain.design.platform.model;
+package platform.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

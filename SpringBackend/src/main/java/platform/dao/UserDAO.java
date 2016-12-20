@@ -1,6 +1,6 @@
-package com.wenyu.brain.design.platform.dao;
+package platform.dao;
 
-import com.wenyu.brain.design.platform.model.User;
+import platform.model.User;
 
 import org.springframework.data.repository.CrudRepository;
 

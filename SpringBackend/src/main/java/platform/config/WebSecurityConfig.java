@@ -1,6 +1,6 @@
-package com.wenyu.brain.design.platform.config;
+package platform.config;
 
-import com.wenyu.brain.design.platform.service.AuthService;
+import platform.service.AuthService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
