@@ -27,49 +27,49 @@ class El:
     # passenger id counter
     pc = 0
 
-    highest_floor_to_load = -1
-    lowest_floor_to_load = -1
+    # highest/lowest floor to pick up passenger
+    # these're important system variable to determine the pick up elevator
+    # should be the idle one or the operating one
+    highest_pick_up_floor = -1
+    lowest_pick_up_floor = -1
 
-    def __init__(self, nf, ne, gp, ce):
-        """
-
-        :param nf: nf number of floors
-        :param ne: ne number of elevators
-        :param gp: gp the period of generating new passenger
-        :param ce: ce the period of operating elevator
-        """
+    def __init__(self):
         self.nf = 6
         self.ne = 2
-        self.gp = 0.2
-        self.ce = 0.5
+        self.gp = 0.5
+        self.ce = 1
+        self.duration = 10
 
-        if nf > 1:
-            self.nf = nf
-
-        if ne > 1:
-            self.ne = ne
-
-        if gp > 0:
-            self.gp = gp
-
-        if ce > 0:
-            self.ce = ce
-
-        for floor in range(1, nf + 1):
+        for floor in range(1, self.nf + 1):
             self.queues[floor] = []
 
-        for eid in range(1, ne + 1):
+        for eid in range(1, self.ne + 1):
             self.elevators[eid] = Elevator(eid)
 
+    # ------------------- Testing functions -------------------
     def run(self):
         print("Start elevator threads...")
 
-        self.new_passenger()
+        stop = threading.Event()
+
+        self.new_passenger(stop)
 
         for eid, el in self.elevators.items():
-            self.operate_elevator(eid)
+            self.operate_elevator(eid, stop)
 
-    def new_passenger(self):
+        self.stop_timer(stop)
+        print("Stop elevator threads...")
+
+    def stop_timer(self, stop):
+        start = time.clock()
+        end = time.clock()
+
+        while end - start < self.duration:
+            end = time.clock()
+
+        stop.set()
+
+    def new_passenger(self, stop):
         floor = random.randint(1, self.nf)
         dest = random.randint(1, self.nf)
         while dest == floor:
@@ -77,29 +77,36 @@ class El:
 
         print("Created new passenger on floor [{}] with id [{}] and destination [{}]".format(floor, self.pc, dest))
 
-        if floor < self.lowest_floor_to_load or self.lowest_floor_to_load == -1:
-            self.lowest_floor_to_load = floor
-        elif floor > self.highest_floor_to_load or self.highest_floor_to_load == -1:
-            self.highest_floor_to_load = floor
+        if floor < self.lowest_pick_up_floor or self.lowest_pick_up_floor == -1:
+            self.lowest_pick_up_floor = floor
+        elif floor > self.highest_pick_up_floor or self.highest_pick_up_floor == -1:
+            self.highest_pick_up_floor = floor
 
         self.queues[floor].append(Passenger(dest, self.pc))
         self.pc += 1
 
-        threading.Timer(interval=self.gp, function=self.new_passenger).start()
+        if not stop.is_set():
+            threading.Timer(interval=self.gp, function=self.new_passenger, args=(stop,)).start()
 
-    def operate_elevator(self, eid):
-        if self.elevators[eid].get_status() == Status.IDLE:
-            if self.highest_floor_to_load != -1:
-                self.elevators[eid].dest = self.highest_floor_to_load
-                self.highest_floor_to_load = -1
-            elif self.lowest_floor_to_load != -1:
-                self.elevators[eid].dest = self.lowest_floor_to_load
-                self.lowest_floor_to_load = -1
-
-        self.load_passenger(eid)
+    def operate_elevator(self, eid, stop):
+        self.set_pick_up_floor(eid)
         self.move_elevator(eid)
+        self.load_passenger(eid)
 
-        threading.Timer(interval=self.ce, function=self.operate_elevator, args=(eid,)).start()
+        if not stop.is_set():
+            threading.Timer(interval=self.ce, function=self.operate_elevator, args=(eid, stop)).start()
+
+    # ------------------- Functions -------------------
+    def set_pick_up_floor(self, eid):
+        el = self.elevators[eid]
+
+        if el.get_status() == Status.IDLE:
+            if self.highest_pick_up_floor != -1:
+                el.dest = self.highest_pick_up_floor
+                self.highest_pick_up_floor = -1
+            elif self.lowest_pick_up_floor != -1:
+                el.dest = self.lowest_pick_up_floor
+                self.lowest_pick_up_floor = -1
 
     def move_elevator(self, eid):
         el = self.elevators[eid]
@@ -111,39 +118,49 @@ class El:
         elif el.get_status() == Status.DOWN:
             el.current_floor -= 1
 
+        passenger_ids_to_drop = [passenger.pid for passenger in el.passengers if passenger.dest == el.current_floor]
         el.passengers = [passenger for passenger in el.passengers if passenger.dest != el.current_floor]
-        time.sleep(0.5)
 
         if from_floor != el.current_floor:
-            print("Elevator [{}] moved to from floor [{}] to floor [{}]".format(eid, from_floor, el.current_floor))
+            print("Elevator [{}] moved to from floor [{}] to floor [{}] and dropped passengers {}"
+                  .format(eid, from_floor, el.current_floor, list(passenger_ids_to_drop)))
         else:
             print("Elevator [{}] is idle on floor [{}]".format(eid, el.current_floor))
 
     def load_passenger(self, eid):
         el = self.elevators[eid]
         passengers_to_load = []
-        new_dest = el.current_floor
+        passengers_go_up = [passenger for passenger in self.queues[el.current_floor]
+                            if passenger.dest > el.current_floor]
+        passengers_go_down = [passenger for passenger in self.queues[el.current_floor]
+                              if passenger.dest < el.current_floor]
 
-        if el.get_status() == Status.IDLE or el.get_status() == Status.UP:
-            passengers_to_load = [passenger for passenger in self.queues[el.current_floor]
-                                  if passenger.dest > el.current_floor]
+        if el.get_status() == Status.IDLE:
+            if len(passengers_go_up) > 0:
+                passengers_to_load = passengers_go_up
+                el.dest = max(passenger.dest for passenger in passengers_go_up)
+            elif len(passengers_go_down) > 0:
+                passengers_to_load = passengers_go_down
+                el.dest = min(passenger.dest for passenger in passengers_go_down)
+
+        elif el.get_status() == Status.UP:
+            passengers_to_load = passengers_go_up
             if len(passengers_to_load) > 0:
-                new_dest = max(passenger.dest for passenger in passengers_to_load)
+                el.dest = max(passenger.dest for passenger in passengers_to_load)
 
         elif el.get_status() == Status.DOWN:
-            passengers_to_load = [passenger for passenger in self.queues[el.current_floor]
-                                  if passenger.dest < el.current_floor]
+            passengers_to_load = passengers_go_down
             if len(passengers_to_load) > 0:
-                new_dest = min(passenger.dest for passenger in passengers_to_load)
+                el.dest = min(passenger.dest for passenger in passengers_to_load)
 
         el.passengers += passengers_to_load
-        el.dest = new_dest
 
         self.queues[el.current_floor] = [passenger for passenger in self.queues[el.current_floor]
                                          if passenger not in passengers_to_load]
 
-        print("Elevator [{}] loaded [{}] passengers on floor [{}], new destination is [{}]"
-              .format(eid, len(passengers_to_load), el.current_floor, new_dest))
+        if len(passengers_to_load) > 0:
+            print("Elevator [{}] loaded [{}] passengers on floor [{}], destination is [{}]"
+                  .format(eid, len(passengers_to_load), el.current_floor, el.dest))
 
 
 class Passenger:
@@ -178,7 +195,7 @@ class Status(Enum):
 
 
 if __name__ == "__main__":
-    self = El(6, 2, 1, 0.5)
+    self = El()
 
     rt = threading.Thread(target=self.run)
     rt.start()
