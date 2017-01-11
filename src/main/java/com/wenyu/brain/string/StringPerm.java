@@ -41,9 +41,7 @@ public class StringPerm implements CanRun {
         }
 
         // 1. each recursion reflect all swapping choices of each permutation (NOT represent each level!!)
-        // 2. swap the current char with a certain one (no matter they're same or not)
-        // one char only need to be swapped ONCE per recursion, otherwise duplication
-        // will be introduced
+        // 2. each level, if X has swapped with Y at index I, X won't swapped with Y at any index after I
         byte[] toSwapChar = new byte[256];
 
         for (int i = index; i < string.length(); i++) {
