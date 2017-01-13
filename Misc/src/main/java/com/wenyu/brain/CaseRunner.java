@@ -1,19 +1,6 @@
 package com.wenyu.brain;
 
-import com.wenyu.brain.dp.Dungeon;
-import com.wenyu.brain.dp.Dungeon2;
-import com.wenyu.brain.math.Pow;
-import com.wenyu.brain.math.Sqrt;
-import com.wenyu.brain.other.BinarySearchRelated;
-import com.wenyu.brain.other.LinkedListOpt;
-import com.wenyu.brain.other.RemoveDupFromSortedList;
-import com.wenyu.brain.string.AllSubstring;
-import com.wenyu.brain.string.StringPerm;
-
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -34,7 +21,7 @@ public class CaseRunner {
 //        Q.add(new Dungeon2());
 //        Q.add(new BinarySearchRelated());
 //        Q.add(new LinkedListOpt());
-        Q.add(new RemoveDupFromSortedList());
+//        Q.add(new RemoveDupFromSortedList());
         Q.forEach(CanRun::run);
     }
 
