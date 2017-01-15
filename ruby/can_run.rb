@@ -12,7 +12,10 @@ module CanRun
     # When any class/module include this module, it will automatically
     # inherit the Runnable module
     #
-    # Also the inherited method is static!!
+    # <include> module => instance method
+    # <extend>  module => static method
+    # see also:
+    # http://www.railstips.org/blog/archives/2009/05/15/include-vs-extend-in-ruby/
     def included(base)
       base.extend Runnable
     end
@@ -24,7 +27,6 @@ module CanRun
     end
   end
 
-  # Only instance method can be included via mixin!!
   def run
     puts "(instance) Execute <run> in class <#{self.class}>"
   end
