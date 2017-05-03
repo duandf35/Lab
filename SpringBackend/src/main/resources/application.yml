@@ -6,6 +6,19 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+    properties:
+      javax:
+        persistence:
+          sharedCache:
+            # ENABLE_SELECTIVE only apply cache to entity with @Cacheable
+            mode: ENABLE_SELECTIVE
+      hibernate:
+        cache:
+          use_second_level_cache: true
+          use_query_cache: true
+          region:
+            factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
+        format_sql: true
   datasource:
     platform: postgres
     url: jdbc:postgresql://localhost:5432/learning

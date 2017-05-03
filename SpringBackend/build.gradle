@@ -32,6 +32,8 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-security')
 
+    compile('org.hibernate:hibernate-ehcache')
+
     compile('postgresql:postgresql:9.+')
 
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
