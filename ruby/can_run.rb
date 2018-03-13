@@ -23,6 +23,7 @@ module CanRun
 
   module Runnable
     def static_check
+      # self.class => Class because module doesn't have instance ?
       puts "(static) Inherit <static_check> method from <Runnable> when Mixin <CanRun> to class <#{self.class}>"
     end
   end

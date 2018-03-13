@@ -2,7 +2,6 @@ server:
   port: 8085
 spring:
   jpa:
-    database: POSTGRESQL
     show-sql: true
     hibernate:
       ddl-auto: update
@@ -19,11 +18,9 @@ spring:
           region:
             factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
         format_sql: true
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
   datasource:
-    platform: postgres
-    url: jdbc:postgresql://localhost:5432/learning
-    username: Wenyu
+    url: jdbc:mysql://localhost:3306/shopping?useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
     password:
-    driver-class-name: org.postgresql.Driver
-  jooq:
-    sql-dialect: Postgres

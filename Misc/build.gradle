@@ -12,6 +12,8 @@ repositories {
 
 dependencies {
     compile('com.google.guava:guava:19.+')
+    compile group: 'com.typesafe.akka', name: 'akka-actor_2.12', version: '2.5.11'
+
 }
 
 task wrapper(type: Wrapper) {

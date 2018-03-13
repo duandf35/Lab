@@ -12,7 +12,6 @@ public class CaseRunner {
     private static final Set<CanRun> Q = new HashSet<>();
 
     private static void runAllCases() {
-        Q.add(new WhiteBoard());
 //        Q.add(new Pow());
 //        Q.add(new AllSubstring());
 //        Q.add(new StringPerm());

@@ -1,6 +1,7 @@
 .idea
 .gradle
 build
+out
 gradle
 gradlew
 gradlew.*
@@ -8,3 +9,4 @@ tmp
 *.iml
 /python/*/__pycache__/
 *hite*oard.*
+.DS_Store
