@@ -1,6 +1,6 @@
-package com.wenyu.brain.dp;
+package com.wenyu.dp;
 
-import com.wenyu.brain.CanRun;
+import com.wenyu.CanRun;
 
 /**
  * Given a grid, find out the number of path from the left upper corner to

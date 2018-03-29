@@ -1,6 +1,6 @@
-package com.wenyu.brain.other;
+package com.wenyu.other;
 
-import com.wenyu.brain.CanRun;
+import com.wenyu.CanRun;
 
 import java.util.Arrays;
 

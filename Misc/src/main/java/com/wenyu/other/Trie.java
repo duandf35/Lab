@@ -1,4 +1,4 @@
-package com.wenyu.brain.other;
+package com.wenyu.other;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -160,7 +160,7 @@ public class Trie {
         String line;
         while ((line = reader.readLine()) != null && line.length() != 0) {
             String[] tokenizedLine = line.split(" ");
-            routes.add(new com.wenyu.brain.other.Trie.Route(tokenizedLine[0], tokenizedLine[1]));
+            routes.add(new Trie.Route(tokenizedLine[0], tokenizedLine[1]));
         }
         return routes;
     }

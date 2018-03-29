@@ -1,4 +1,4 @@
-package com.wenyu.brain.design.blackjack;
+package com.wenyu.design.blackjack;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;

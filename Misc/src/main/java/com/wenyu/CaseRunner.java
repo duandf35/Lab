@@ -1,4 +1,4 @@
-package com.wenyu.brain;
+package com.wenyu;
 
 import java.util.HashSet;
 import java.util.Set;

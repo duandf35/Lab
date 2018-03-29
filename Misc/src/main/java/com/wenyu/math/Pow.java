@@ -1,6 +1,6 @@
-package com.wenyu.brain.math;
+package com.wenyu.math;
 
-import com.wenyu.brain.CanRun;
+import com.wenyu.CanRun;
 
 import java.util.ArrayList;
 import java.util.List;

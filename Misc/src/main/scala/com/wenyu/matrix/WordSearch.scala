@@ -1,4 +1,4 @@
-package com.wenyu.brain.matrix
+package com.wenyu.matrix
 
 object WordSearch {
   def exist(board: Array[Array[Char]], word: String): Boolean = {

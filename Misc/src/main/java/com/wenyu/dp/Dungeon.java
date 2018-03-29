@@ -1,6 +1,6 @@
-package com.wenyu.brain.dp;
+package com.wenyu.dp;
 
-import com.wenyu.brain.CanRun;
+import com.wenyu.CanRun;
 
 /**
  * The dungeon consists of M x N rooms laid out in a 2D grid.

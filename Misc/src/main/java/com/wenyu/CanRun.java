@@ -1,4 +1,4 @@
-package com.wenyu.brain;
+package com.wenyu;
 
 /**
  * @author Wenyu
