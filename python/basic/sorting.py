@@ -1,7 +1,7 @@
 #!/usr/local/bin/python3
 
 
-class ListRelated:
+class Sorting:
 
     def __init__(self):
         """
@@ -36,7 +36,7 @@ class ListRelated:
     @staticmethod
     def partition(a_list, first, last):
         # get the left value of two middle values
-        pivot = int((last - first) / 2) + first
+        pivot = int((last + first) / 2)
 
         # put the pivot in the first of the section
         a_list[first], a_list[pivot] = a_list[pivot], a_list[first]
