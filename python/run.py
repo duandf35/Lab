@@ -13,8 +13,8 @@ if __name__ == "__main__":
     classes = [
         # s,
         # lr,
-        # bst,
-        ll
+        bst,
+        # ll
     ]
 
     for clazz in classes:
