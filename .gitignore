@@ -11,3 +11,4 @@ gradlew.*
 tmp
 *hite*oard.*
 **/*/concurrent/ntu/
+**/*/.vscode/*

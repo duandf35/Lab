@@ -81,6 +81,9 @@ class LL:
 
         return node
 
+    def loop(self, node):
+        pass
+
     def print(self, msg):
         print(msg)
         node = self.head
