@@ -1,2 +1,2 @@
-include 'Shopping'
-include 'Misc'
+include 'shopping'
+include 'misc'
